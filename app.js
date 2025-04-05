@@ -31,5 +31,7 @@ app.use(
   })
 );
 
+dbConnection();
+app.use(errorMiddleware);
 
 export default app;
