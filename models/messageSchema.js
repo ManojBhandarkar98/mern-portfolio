@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 
 
 const messageSchema = new mongoose.Schema({
-    senderNamw:{
+    senderName:{
         type:String,
         minLength: [2, "Name must contains at least 2 characters"]
     },

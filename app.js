@@ -5,6 +5,7 @@ import cookieParser from "cookie-parser";
 import fileUpload from "express-fileupload";
 import dbConnection from "./database/dbConnection.js";
 import { errorMiddleware } from "./middlewares/error.js";
+import messageRouter from "./routers/messageRoute.js";
 
 const app = express();
 
@@ -22,7 +23,7 @@ app.use(cookieParser());
 
 app.use(express.json());
 
-app.use(express.urlencoded({ extended: true }));
+app.use(express.urlencoded({ extended: false }));
 
 app.use(
   fileUpload({
@@ -30,6 +31,8 @@ app.use(
     tempFileDir: "/tmp/",
   })
 );
+
+app.use("/api/v1/message", messageRouter)
 
 dbConnection();
 app.use(errorMiddleware);

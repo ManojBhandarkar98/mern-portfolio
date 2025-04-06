@@ -1,12 +1,18 @@
-import React from 'react'
-import ErrorHandler from '../middlewares/error'
-import { catchAsyncErrors } from '../middlewares/catchAsyncErrors'
-import { Message } from '../models/messageSchema'
+import ErrorHandler from "../middlewares/error.js";
+import { catchAsyncErrors } from "../middlewares/catchAsyncErrors.js";
+import { Message } from "../models/messageSchema.js";
 
+export const sendMessage = catchAsyncErrors(async (req, res, next) => {
+  const { senderName, subject, message } = req.body;
+  if( !senderName || !subject || !message ){
+    return next(new ErrorHandler("Pleas Fill Full Form", 400))
+  }
 
-export const sendMessage = catchAsyncErrors(async(req, resizeBy, next) => {
-  const {senderName, subject, message} = req.body;
+  const data = await Message.create({ senderName, subject, message });
+  res.status(201).json({
+    success: true,
+    message: "Message Sent",
+    data,
+  });
+});
 
-}) 
-
-export default messageController
