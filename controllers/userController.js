@@ -195,3 +195,12 @@ export const updatePassword = catchAsyncErrors(async (req, res, next) => {
     message: "Password Updated Successfully...!",
   });
 });
+
+export const getUserForPortfolio = catchAsyncErrors(async (req, res, next) => {
+  const id = "67f49fb747908ef6c9861d7e";
+  const user = await User.findById(id);
+  res.status(200).json({
+    success: true,
+    user,
+  });
+});
