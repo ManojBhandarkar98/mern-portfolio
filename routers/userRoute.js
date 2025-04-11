@@ -14,6 +14,7 @@ router.get("/me", isAuthenticated, getUser);
 
 router.put("/update/me", isAuthenticated, updateProfile);
 
+router.put("/update/password", isAuthenticated, updatePassword);
 
 
 export default router;
