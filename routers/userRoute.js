@@ -17,6 +17,7 @@ router.put("/update/me", isAuthenticated, updateProfile);
 router.put("/update/password", isAuthenticated, updatePassword);
 router.get("/me/portfolio", getUserForPortfolio);
 
+router.post("/password/forgot", forgotPassword);
 
 export default router;
  

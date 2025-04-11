@@ -204,3 +204,33 @@ export const getUserForPortfolio = catchAsyncErrors(async (req, res, next) => {
     user,
   });
 });
+
+export const forgotPassword = catchAsyncErrors(async (req, res, next) => {
+  const user = await User.findOne({ email: req.body.email });
+  if (!user) {
+    return next(new ErrorHandler("User not found", 404));
+  }
+  const resetToken = user.getResetPasswordToken();
+  await user.save({ validiteBeforeSave: false });
+  const resetPasswordURL = `${process.env.DASHBOARD_URL}/password/reset/${resetToken}`;
+
+  const message = `Your Reset Password Token is :- \n\n 
+  ${resetPasswordURL} \n\n If You have not requested this, Please ignore it`;
+
+  try {
+    await sendEmail({
+      email: user.email,
+      subject: "Personel Portfolio Dashboard Recovery Password",
+      message,
+    });
+    res.status(200).json({
+      success: true,
+      message: `Email sent to ${user.email} successfully...!`,
+    });
+  } catch (error) {
+    user.getResetPasswordExpire = undefined;
+    user.getResetPasswordToken = undefined;
+    user.save();
+    return next(new ErrorHandler(error.message, 500))
+  }
+});
