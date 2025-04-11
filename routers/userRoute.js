@@ -12,6 +12,9 @@ router.get("/logout", isAuthenticated, logout);
 
 router.get("/me", isAuthenticated, getUser);
 
+router.put("/update/me", isAuthenticated, updateProfile);
+
+
 
 export default router;
  
