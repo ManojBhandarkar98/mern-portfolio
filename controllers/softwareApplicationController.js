@@ -38,3 +38,26 @@ export const addNewApplication = catchAsyncErrors(async (req, res, next) => {
     softwareApplication,
   });
 });
+
+export const deleteApplication = catchAsyncErrors(async (req, res, next) => {
+  const { id } = req.params;
+  let softwareApplication = await SoftwareApplication.findById(id);
+  if (!softwareApplication) {
+    return next(new ErrorHandler("Already Deleted!", 404));
+  }
+  const softwareApplicationSvgId = softwareApplication.svg.public_id;
+  await cloudinary.uploader.destroy(softwareApplicationSvgId);
+  await softwareApplication.deleteOne();
+  res.status(200).json({
+    success: true,
+    message: "Software Application Deleted!",
+  });
+});
+
+export const getAllApplications = catchAsyncErrors(async (req, res, next) => {
+  const softwareApplications = await SoftwareApplication.find();
+  res.status(200).json({
+    success: true,
+    softwareApplications,
+  });
+});
