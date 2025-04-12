@@ -4,6 +4,7 @@ import { SoftwareApplication } from "../models/softwareApplicationSchema.js";
 import { v2 as cloudinary } from "cloudinary";
 
 export const addNewApplication = catchAsyncErrors(async (req, res, next) => {
+  console.log('hi1')
   if (!req.files || Object.keys(req.files).length === 0) {
     return next(
       new ErrorHandler("Software Application Icon/Image Required!", 404)
@@ -25,6 +26,7 @@ export const addNewApplication = catchAsyncErrors(async (req, res, next) => {
     );
     return next(new ErrorHandler("Failed to upload avatar to Cloudinary", 500));
   }
+  console.log('hi')
   const softwareApplication = await SoftwareApplication.create({
     name,
     svg: {
