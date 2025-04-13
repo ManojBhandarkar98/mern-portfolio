@@ -9,6 +9,8 @@ import messageRouter from "./routers/messageRoute.js";
 import userRouter from "./routers/userRoute.js";
 import timelineRouter from "./routers/timelineRoute.js";
 import softwareAppRouter from "./routers/softwareApplicationRouter.js";
+import skillRouter from "./routers/skillRouter.js";
+
 const app = express();
 
 dotenv.config({ path: "./config/config.env" });
@@ -25,7 +27,7 @@ app.use(cookieParser());
 
 app.use(express.json());
 
-app.use(express.urlencoded({ extended: false }));
+app.use(express.urlencoded({ extended: true }));
 
 app.use(
   fileUpload({
@@ -38,6 +40,7 @@ app.use("/api/v1/message", messageRouter);
 app.use("/api/v1/user", userRouter);
 app.use("/api/v1/timeline",timelineRouter);
 app.use("/api/v1/softwareapplication", softwareAppRouter);
+app.use("/api/v1/skill", skillRouter);
 
 dbConnection();
 app.use(errorMiddleware);
