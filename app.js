@@ -10,6 +10,7 @@ import userRouter from "./routers/userRoute.js";
 import timelineRouter from "./routers/timelineRoute.js";
 import softwareAppRouter from "./routers/softwareApplicationRouter.js";
 import skillRouter from "./routers/skillRouter.js";
+import projectRouter from "./routers/projectRouter.js";
 
 const app = express();
 
@@ -41,6 +42,7 @@ app.use("/api/v1/user", userRouter);
 app.use("/api/v1/timeline",timelineRouter);
 app.use("/api/v1/softwareapplication", softwareAppRouter);
 app.use("/api/v1/skill", skillRouter);
+app.use("/api/v1/project", projectRouter);
 
 dbConnection();
 app.use(errorMiddleware);
