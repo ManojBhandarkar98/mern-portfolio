@@ -60,3 +60,10 @@ export const updateSkill = catchAsyncErrors(async (req, res, next) => {
     skill,
   });
 });
+export const getAllSkills = catchAsyncErrors(async (req, res, next) => {
+  const skills = await Skill.find();
+  res.status(200).json({
+    success: true,
+    skills,
+  });
+});
