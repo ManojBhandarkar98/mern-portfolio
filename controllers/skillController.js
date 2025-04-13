@@ -37,7 +37,20 @@ export const addNewSkill = catchAsyncErrors(async (req, res, next) => {
     skill,
   });
 });
-
+export const deleteSkill = catchAsyncErrors(async (req, res, next) => {
+  const { id } = req.params;
+  let skill = await Skill.findById(id);
+  if (!skill) {
+    return next(new ErrorHandler("Already Deleted!", 404));
+  }
+  const skillSvgId = skill.svg.public_id;
+  await cloudinary.uploader.destroy(skillSvgId);
+  await skill.deleteOne();
+  res.status(200).json({
+    success: true,
+    message: "Skill Deleted!",
+  });
+});
 export const updateSkill = catchAsyncErrors(async (req, res, next) => {
   const { id } = req.params;
   let skill = await Skill.findById(id);
