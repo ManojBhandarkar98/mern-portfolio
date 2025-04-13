@@ -100,3 +100,18 @@ export const updateProject = catchAsyncErrors(async (req, res, next) => {
     project,
   });
 });
+
+export const deleteProject = catchAsyncErrors(async (req, res, next) => {
+  const { id } = req.params;
+  const project = await Project.findById(id);
+  if (!project) {
+    return next(new ErrorHandler("Already Deleted!", 404));
+  }
+  const projectImageId = project.projectBanner.public_id;
+  await cloudinary.uploader.destroy(projectImageId);
+  await project.deleteOne();
+  res.status(200).json({
+    success: true,
+    message: "Project Deleted!",
+  });
+});
