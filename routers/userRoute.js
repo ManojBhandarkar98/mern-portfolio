@@ -15,7 +15,7 @@ router.get("/me", isAuthenticated, getUser);
 router.put("/update/me", isAuthenticated, updateProfile);
 
 router.put("/update/password", isAuthenticated, updatePassword);
-router.get("/me/portfolio", getUserForPortfolio);
+router.get("/portfolio/me", getUserForPortfolio);
 
 router.post("/password/forgot", forgotPassword);
 
